@@ -1,0 +1,20 @@
+{
+  "nome": "",
+  "titulo_profissional": "",
+  "resumo_profissional": "",
+  "habilidades_tecnicas": [],
+  "experiencias": [
+    {
+      "cargo": "",
+      "empresa": "",
+      "descricao": ""
+    }
+  ],
+  "formacao": [
+    {
+      "curso": "",
+      "instituicao": "",
+      "status": ""
+    }
+  ]
+}

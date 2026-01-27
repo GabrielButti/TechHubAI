@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ nome }} - Currículo</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 40px;
+      color: #333;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+    }
+
+    h2 {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 4px;
+      margin-top: 30px;
+    }
+
+    .titulo {
+      color: #555;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      padding-left: 18px;
+    }
+
+    .experiencia {
+      margin-bottom: 15px;
+    }
+
+    .cargo {
+      font-weight: bold;
+    }
+
+    .empresa {
+      font-style: italic;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>{{ nome }}</h1>
+  <div class="titulo">{{ titulo_profissional }}</div>
+
+  <h2>Resumo Profissional</h2>
+  <p>{{ resumo_profissional }}</p>
+
+  <h2>Habilidades Técnicas</h2>
+  <ul>
+    {% for skill in habilidades_tecnicas %}
+      <li>{{ skill }}</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Experiência Profissional</h2>
+  {% for exp in experiencias %}
+    <div class="experiencia">
+      <div class="cargo">{{ exp.cargo }}</div>
+      <div class="empresa">{{ exp.empresa }}</div>
+      <p>{{ exp.descricao }}</p>
+    </div>
+  {% endfor %}
+
+  <h2>Formação Acadêmica</h2>
+  {% for form in formacao %}
+    <p>
+      <strong>{{ form.curso }}</strong> — {{ form.instituicao }} ({{ form.status }})
+    </p>
+  {% endfor %}
+
+</body>
+</html>
