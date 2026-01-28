@@ -8,3 +8,17 @@ def gerar_curriculo(schema: dict, dados: dict, prompt_base: str) -> str:
 
     resposta = gerar_resposta_llm(prompt)
     return resposta
+
+
+
+def avaliar_candidatura(curriculo: dict, vaga: str, schema: dict, prompt_base: str) -> dict:
+    prompt = (
+        prompt_base
+        .replace("{SCHEMA}", json.dumps(schema, ensure_ascii=False))
+        .replace("{CURRICULO}", json.dumps(curriculo, ensure_ascii=False))
+        .replace("{VAGA}", vaga)
+    )
+
+    resposta = gerar_resposta_llm(prompt)
+
+    return json.loads(resposta)

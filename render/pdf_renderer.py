@@ -121,4 +121,4 @@ dados_candidato = {
 }
 
 
-renderizar_pdf(dados_candidato)
+#renderizar_pdf(dados_candidato)
