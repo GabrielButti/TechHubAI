@@ -4,6 +4,8 @@ Gere um currículo profissional para a área de dados,
 voltado para vagas júnior, no formato JSON.
 
 REGRAS:
+- Não use markdown
+- Não use ```json
 - Responda sempre em primeira pessoa do singular
 - Responda tudo em PT-BR
 - Use apenas o schema fornecido
