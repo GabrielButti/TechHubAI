@@ -20,7 +20,10 @@ export const createUserController = async (req: Request, res: Response) => {
 
 export const getUsersController = async (req: Request, res: Response) => {
 	try {
-		const users = await prisma.user.findMany({ where: { status: "ACTIVE" } });
+		const users = await prisma.user.findMany({
+			where: { status: "ACTIVE" },
+			omit: { password: true },
+		});
 		return res
 			.status(200)
 			.json({ message: "Users retrieved successfully", users });
@@ -30,12 +33,19 @@ export const getUsersController = async (req: Request, res: Response) => {
 	}
 };
 
-export const getUserByIdController = async (req: Request, res: Response) => {
+export const getUserByIdController = async (
+	req: Request<{ id: string }>,
+	res: Response,
+) => {
 	try {
 		const { id } = req.params;
+		if (!id) {
+			return res.status(400).json({ message: "User ID is required" });
+		}
+
 		const user = await prisma.user.findUnique({
 			where: {
-				id: Number(id),
+				id,
 			},
 		});
 		return res
@@ -47,12 +57,15 @@ export const getUserByIdController = async (req: Request, res: Response) => {
 	}
 };
 
-export const updateUserByIdController = async (req: Request, res: Response) => {
+export const updateUserByIdController = async (
+	req: Request<{ id: string }>,
+	res: Response,
+) => {
 	try {
 		const { id } = req.params;
 		await prisma.user.update({
 			where: {
-				id: Number(id),
+				id,
 			},
 			data: req.body,
 		});
@@ -63,13 +76,16 @@ export const updateUserByIdController = async (req: Request, res: Response) => {
 	}
 };
 
-export const deleteUserByIdController = async (req: Request, res: Response) => {
+export const deleteUserByIdController = async (
+	req: Request<{ id: string }>,
+	res: Response,
+) => {
 	try {
 		const { id } = req.params;
 
 		await prisma.user.update({
 			where: {
-				id: Number(id),
+				id,
 			},
 			data: {
 				status: "INACTIVE",
