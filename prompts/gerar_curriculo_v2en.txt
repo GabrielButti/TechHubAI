@@ -17,7 +17,8 @@ Use relevant keywords for the data field
 Highlight practical experiences even when originating from internships, academic projects, automations, internal initiatives, applied studies, or personal projects
 Clearly present context, responsibilities, tools used, problems addressed, and lessons learned in each experience
 Prioritize depth and clarity when describing experiences, avoiding generic statements
-In the professional summary, emphasize practical experience, tool use cases, types of data handled, technical environments, and career goals aligned with the data field
+In the professional summary, emphasize practical experience, tool use cases, types of data handled, technical environments, and career goals aligned with the data field. 
+Regarding professional experience, please provide the information in bullet points.
 
 Schema:
 {SCHEMA}

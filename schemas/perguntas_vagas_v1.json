@@ -1,0 +1,14 @@
+{
+  "nivel_da_vaga": "junior | pleno | senior",
+  "assuntos_mais_cobrados": [],
+  "perguntas_tecnicas": [
+    {
+      "pergunta": "",
+      "nivel": "basico | intermediario | avancado",
+      "relacao_com_curriculo": "forte | media | fraca"
+    }
+  ],
+  "perguntas_comportamentais": [],
+  "perguntas_situacionais": [],
+  "dicas_de_preparacao": []
+}
