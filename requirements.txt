@@ -1,7 +1,3 @@
-fastapi
-uvicorn
-pytest
-python-multipart
 fpdf
 gemini-api
 google-genai
