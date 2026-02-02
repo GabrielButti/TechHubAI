@@ -1,0 +1,4 @@
+fpdf
+gemini-api
+google-genai
+dotenv
