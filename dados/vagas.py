@@ -57,4 +57,20 @@ data_vagas = [
             "Estamos buscando um Analista de Dados Júnior com experiência em: - SQL avançado;- Python para análise de dados; - Power BI; - Conhecimento em ETL; - Diferencial: AWS e automações; Atuação em time ágil, com foco em BI e tomada de decisão."
         ),
     },
+    {
+        "id": 6,
+        "titulo": "Especialista Clínico de Neuromodulação",
+        "descricao": (
+            "Estamos buscando um Especialista Clínico de Neuromodulação com atribuições em: "
+            "- Avaliação clínica de pacientes para indicação e segurança de procedimentos de neuromodulação; "
+            "- Planejamento e desenvolvimento de protocolos de tratamento (TMS, tDCS, DBS); "
+            "- Condução e supervisão de sessões clínicas, incluindo ajuste de parâmetros e monitoramento de resposta; "
+            "- Interpretação de resultados e colaboração em decisões terapêuticas; "
+            "- Treinamento e supervisão de equipe técnica; "
+            "- Garantia de conformidade com normas regulatórias, ética e segurança do paciente; "
+            "- Participação em estudos clínicos, coleta de dados e comunicação científica; "
+            "- Manutenção e validação de equipamentos e reporte de incidentes; "
+            "Requisitos: formação em área da saúde (fisioterapia, medicina, enfermagem ou áreas afins) com experiência prática em neuromodulação. Diferencial: formação específica em neuromodulação, experiência com TMS/tDCS/DBS, conhecimento em pesquisa clínica e eletrônica biomédica."
+        ),
+    },
 ]
