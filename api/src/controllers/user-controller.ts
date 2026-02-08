@@ -22,14 +22,14 @@ export const getUserById = async (id: string) => {
 
 export const createUserController = asyncRequestHandler(
 	async (req: Request, res: Response) => {
-		const parsed = createUserSchema.safeParse(req.body);
+		const { data, success, error } = createUserSchema.safeParse(req.body);
 
-		if (!parsed.success) {
-			res.status(400).json(normalizeValidationResponse(parsed.error));
+		if (!success) {
+			res.status(400).json(normalizeValidationResponse(error));
 			return;
 		}
 
-		const { name, email, password } = parsed.data;
+		const { name, email, password } = data;
 
 		const userExists = await prisma.user.findUnique({
 			where: {
