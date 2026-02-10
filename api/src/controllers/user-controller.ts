@@ -2,22 +2,18 @@ import type { Request, Response } from "express";
 import { prisma } from "../../lib/prisma";
 import { asyncRequestHandler } from "../middlewares/async-request-handler";
 import { hashPassword } from "../utils/hash-password";
-import { createUserSchema } from "../schemas/create-user-schema";
 import { normalizeValidationResponse } from "../utils/normalize-validation-response";
-import { requestParamsIdSchema } from "../schemas/request-params-id";
+import { createUserSchema, requestParamsIdSchema } from "../schemas";
 
-export const getUserById = async (id: string) => {
-	const user = await prisma.user.findUnique({
-		where: {
-			id,
-		},
-	});
+export const checkUserExists = async (id: string, email?: string) => {
+	const count = await prisma.user.count({ where: { id } });
 
-	if (!user) {
-		return false;
+	if (email) {
+		const count = await prisma.user.count({ where: { email } });
+		return count > 0;
 	}
 
-	return true;
+	return count > 0;
 };
 
 export const createUserController = asyncRequestHandler(
@@ -31,14 +27,10 @@ export const createUserController = asyncRequestHandler(
 
 		const { name, email, password } = data;
 
-		const userExists = await prisma.user.findUnique({
-			where: {
-				email,
-			},
-		});
+		const userExists = await checkUserExists("", email);
 
 		if (userExists) {
-			res.status(400).json({ message: "User already exists" });
+			res.status(409).json({ message: "User already exists" });
 			return;
 		}
 
@@ -61,11 +53,6 @@ export const getUsersController = asyncRequestHandler(
 			where: { status: "ACTIVE" },
 			omit: { passwordHash: true },
 		});
-
-		if (!users) {
-			res.status(404).json({ message: "Users not found" });
-			return;
-		}
 
 		res.status(200).json({ message: "Users retrieved successfully", users });
 	},
@@ -102,12 +89,14 @@ export const updateUserByIdController = asyncRequestHandler(
 			req.params,
 		);
 
+		const { name, email, role, status } = req.body;
+
 		if (!success) {
 			res.status(400).json(normalizeValidationResponse(error));
 			return;
 		}
 
-		const userExists = await getUserById(data.id);
+		const userExists = await checkUserExists(data.id);
 
 		if (!userExists) {
 			res.status(404).json({ message: "User not found" });
@@ -118,10 +107,15 @@ export const updateUserByIdController = asyncRequestHandler(
 			where: {
 				id: data.id,
 			},
-			data: req.body,
+			data: {
+				name,
+				email,
+				role,
+				status,
+			},
 		});
 
-		res.status(201).json({ message: "User updated successfully" });
+		res.status(200).json({ message: "User updated successfully" });
 	},
 );
 
@@ -136,7 +130,7 @@ export const deleteUserByIdController = asyncRequestHandler(
 			return;
 		}
 
-		const userExists = await getUserById(data.id);
+		const userExists = await checkUserExists(data.id);
 
 		if (!userExists) {
 			res.status(404).json({ message: "User not found" });
@@ -152,6 +146,6 @@ export const deleteUserByIdController = asyncRequestHandler(
 			},
 		});
 
-		res.status(201).json({ message: "User deleted successfully" });
+		res.status(200).json({ message: "User deleted successfully" });
 	},
 );
