@@ -4,6 +4,7 @@ interface Env {
 	readonly NODE_ENV: string;
 	readonly PORT: number;
 	readonly DATABASE_URL: string;
+	readonly DIRECT_URL: string;
 	readonly JWT_SECRET: string;
 	readonly JWT_EXPIRES_IN: string;
 	readonly JWT_REFRESH_SECRET: string;
@@ -15,6 +16,7 @@ const getEnv = (): Env => {
 	const nodeEnv = process.env.NODE_ENV || "development";
 	const port = Number(process.env.PORT || "3000");
 	const databaseUrl = process.env.DATABASE_URL;
+	const directUrl = process.env.DIRECT_URL;
 	const jwtSecret = process.env.JWT_SECRET;
 	const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
 	const jwtRefreshSecret = process.env.JWT_REFRESH_SECRET;
@@ -22,6 +24,7 @@ const getEnv = (): Env => {
 	const bcryptRounds = Number(process.env.BCRYPT_ROUNDS);
 
 	if (!databaseUrl) throw new Error("DATABASE_URL is not defined");
+	if (!directUrl) throw new Error("DIRECT_URL is not defined");
 	if (!jwtSecret) throw new Error("JWT_SECRET is not defined");
 	if (!jwtExpiresIn) throw new Error("JWT_EXPIRES_IN is not defined");
 	if (!jwtRefreshSecret) throw new Error("JWT_REFRESH_SECRET is not defined");
@@ -33,6 +36,7 @@ const getEnv = (): Env => {
 		NODE_ENV: nodeEnv,
 		PORT: port,
 		DATABASE_URL: databaseUrl,
+		DIRECT_URL: directUrl,
 		JWT_SECRET: jwtSecret,
 		JWT_EXPIRES_IN: jwtExpiresIn,
 		JWT_REFRESH_SECRET: jwtRefreshSecret,

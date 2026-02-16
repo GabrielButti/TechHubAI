@@ -1,6 +1,7 @@
 import { prisma } from "../../lib/prisma";
 import type { CreateUserSchema, UpdateUserSchema } from "../schemas";
 import { hashPassword } from "../utils/hash-password";
+import { generateTokens } from "../utils/jwt";
 
 export const checkUserExists = async (id: string, email?: string) => {
 	const count = await prisma.user.count({ where: { id } });
@@ -18,10 +19,17 @@ export const createUserService = async ({
 	password,
 }: CreateUserSchema) => {
 	const passwordHash = await hashPassword(password);
-
-	return prisma.user.create({
+	const user = await prisma.user.create({
 		data: { name, email, passwordHash },
 	});
+	const tokens = generateTokens({ sub: user.id, email: user.email })
+
+	await prisma.user.update({
+		where: { id: user.id },
+		data: { refreshToken: tokens.refreshToken },
+	});
+
+	return { user, tokens };
 };
 
 export const getUsersService = async () => {

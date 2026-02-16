@@ -11,7 +11,7 @@ import { userRoutes } from "./src/routes/user-routes.ts";
 import { env } from "./src/config/env.ts";
 
 const app = express();
-const PORT = env.PORT; // process.env.PORT || 3000;
+const PORT = env.PORT;
 
 app.use(cors());
 app.use(helmet());

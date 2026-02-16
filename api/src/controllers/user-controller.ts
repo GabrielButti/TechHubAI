@@ -25,8 +25,10 @@ export const createUserController = asyncRequestHandler(
 			return;
 		}
 
-		const user = await createUserService(data);
-		res.status(201).json({ id: user.id, message: "User created successfully" });
+		const { user, tokens } = await createUserService(data);
+		res
+			.status(201)
+			.json({ id: user.id, tokens, message: "User created successfully" });
 	},
 );
 
