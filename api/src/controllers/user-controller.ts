@@ -10,6 +10,7 @@ import {
 	getUsersService,
 	updateUserByIdService,
 } from "../services/user-service";
+import type { AuthRequest } from "../types/types";
 
 export const createUserController = asyncRequestHandler(
 	async (req: Request, res: Response) => {
@@ -36,6 +37,17 @@ export const getUsersController = asyncRequestHandler(
 	async (req: Request, res: Response) => {
 		const users = await getUsersService();
 		res.status(200).json({ message: "Users retrieved successfully", users });
+	},
+);
+
+export const getProfileController = asyncRequestHandler(
+	async (req: AuthRequest, res: Response) => {
+		if (!req.user) {
+			res.status(401).json({ message: "User not authenticated!" });
+			return;
+		}
+
+		res.json({ user: req.user });
 	},
 );
 

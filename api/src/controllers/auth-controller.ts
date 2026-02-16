@@ -7,6 +7,8 @@ import type { AuthRequest } from "../types/types";
 export const login = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const { email, password } = req.body;
+
+		console.log(email, password);
 		if (!email || !password) {
 			res.status(400).json({ message: "Email and password are required!" });
 			return;
@@ -18,7 +20,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 			return;
 		}
 
-		const isPasswordValid = await verifyPassword(password, user.passwordHash);
+		const isPasswordValid = await verifyPassword(user.passwordHash, password);
 		if (!isPasswordValid) {
 			res.status(401).json({ message: "Invalid credentials!" });
 			return;
@@ -33,7 +35,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 		const { passwordHash: _, refreshToken: __, ...userWithoutSensitive } = user;
 		res.json({ user: userWithoutSensitive, tokens });
 	} catch (error) {
-		console.error("Login error:", error);
+		console.log("Login error:", error);
 		res.status(500).json({ message: "Internal server error!" });
 	}
 };
@@ -55,7 +57,7 @@ export const logout = async (
 
 		res.status(204).send();
 	} catch (error) {
-		console.error("Logout error:", error);
+		console.log("Logout error:", error);
 		res.status(500).json({ message: "Internal server error!" });
 	}
 };
@@ -70,6 +72,8 @@ export const refresh = async (req: Request, res: Response): Promise<void> => {
 		}
 
 		const payload = verifyRefreshToken(refreshToken);
+
+		console.log(payload);
 		if (!payload) {
 			res.status(401).json({ message: "Invalid refresh token!" });
 			return;
@@ -90,7 +94,7 @@ export const refresh = async (req: Request, res: Response): Promise<void> => {
 
 		res.json({ tokens });
 	} catch (error) {
-		console.error("Refresh error:", error);
+		console.log("Refresh error:", error);
 		res.status(500).json({ message: "Internal server error!" });
 	}
 };

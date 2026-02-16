@@ -19,6 +19,7 @@ export const authenticate = () => {
 		const token = authHeader.substring(7);
 		const payload = verifyAccessToken(token);
 
+		console.log(payload);
 		if (!payload) {
 			res.status(401).json({ message: "Invalid token!" });
 			return;
@@ -35,12 +36,12 @@ export const authenticate = () => {
 			},
 		});
 
-        if (!user) {
-            res.status(401).json({ message: "User not found!" })
-            return
-        }
+		if (!user) {
+			res.status(401).json({ message: "User not found!" });
+			return;
+		}
 
-        req.user = user as UserWithoutPassword
-        next()
+		req.user = user as UserWithoutPassword;
+		next();
 	};
 };

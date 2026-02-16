@@ -22,7 +22,7 @@ export const createUserService = async ({
 	const user = await prisma.user.create({
 		data: { name, email, passwordHash },
 	});
-	const tokens = generateTokens({ sub: user.id, email: user.email })
+	const tokens = generateTokens({ sub: user.id, email: user.email });
 
 	await prisma.user.update({
 		where: { id: user.id },
@@ -35,14 +35,14 @@ export const createUserService = async ({
 export const getUsersService = async () => {
 	return prisma.user.findMany({
 		where: { status: "ACTIVE" },
-		omit: { passwordHash: true },
+		omit: { passwordHash: true, refreshToken: true },
 	});
 };
 
 export const getUserByIdService = async (id: string) => {
 	return prisma.user.findUnique({
 		where: { id },
-		omit: { passwordHash: true },
+		omit: { passwordHash: true, refreshToken: true },
 	});
 };
 
