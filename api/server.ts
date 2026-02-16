@@ -8,10 +8,10 @@ dotenv.config({
 });
 
 import { userRoutes } from "./src/routes/user-routes.ts";
-import { prisma } from "./lib/prisma.ts";
+import { env } from "./src/config/env.ts";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = env.PORT; // process.env.PORT || 3000;
 
 app.use(cors());
 app.use(helmet());
@@ -25,16 +25,3 @@ app.get("/health", (req, res) => {
 app.listen(PORT, () => {
 	console.log(`Server is running at http://localhost:${PORT}`);
 });
-
-async function gracefulShutdown() {
-	await prisma.$disconnect();
-	process.on("SIGINT", () => {
-		process.exit(0);
-	});
-
-	process.on("SIGTERM", () => {
-		process.exit(0);
-	});
-}
-
-gracefulShutdown();
